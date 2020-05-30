@@ -1,0 +1,8 @@
+/* iView样式覆盖 */
+.ivu-menu-dark.ivu-menu-vertical .ivu-menu-submenu-title:hover {
+    background-color: #101117;
+    color: #fff;
+}
+.ivu-menu-dark.ivu-menu-vertical .ivu-menu-opened .ivu-menu-submenu-title {
+    background-color: #101117;
+}
