@@ -2,13 +2,13 @@ import Vue from 'vue'
 import App from './App.vue'
 import router, { syncRouterMap } from './router'
 import store from './store'
-import { Sider, Button, Menu, Submenu, MenuItem, Icon } from 'view-design'
+import { Sider, Button, Menu, Submenu, MenuItem, Icon, RadioGroup, Radio, DatePicker, Tooltip } from 'view-design'
 import 'view-design/dist/styles/iview.css'
 import './assets/cover.css'
 
 // import { nav } from './config'
 
-const iViewComponents = { Sider, Button, Menu, Submenu, MenuItem, Icon }
+const iViewComponents = { Sider, Button, Menu, Submenu, MenuItem, Icon, RadioGroup, Radio, DatePicker, Tooltip }
 Object.keys(iViewComponents).forEach(key => {
   Vue.component(key, iViewComponents[key])
 })
