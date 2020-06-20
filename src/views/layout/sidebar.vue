@@ -4,13 +4,12 @@
       <div class="logo">iView Admin</div>
       <div class="menus">
         <Menu theme="dark">
-          <Submenu name="1">
+          <Submenu v-for="(item, index) in allMenu[menus]" :key="index" :name="item.path">
             <template slot="title">
               <Icon type="ios-appstore" size="20"/>
-              <span>应用商店</span>
+              <span>{{ item.label }}</span>
             </template>
-            <MenuItem name="game">娱乐游戏</MenuItem>
-            <MenuItem name="study">学习生活</MenuItem>
+            <MenuItem v-for="(child, idx) in item.children" :key="idx" :name="child.path">{{ child.label }}</MenuItem>
           </Submenu>
         </Menu>
       </div>
@@ -19,8 +18,22 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
-  name: 'sideBar'
+  name: 'sideBar',
+  data () {
+    return {}
+  },
+  methods: {},
+  computed: {
+    ...mapState({
+      menus: 'activeMenu',
+      allMenu: 'allMenus'
+    })
+  },
+  mounted () {
+    console.log(this.menus, this.allMenu)
+  }
 }
 </script>
 

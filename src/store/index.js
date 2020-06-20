@@ -5,19 +5,19 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    menu: [],
     allMenus: {},
-    nav: []
+    nav: [],
+    activeMenu: 'index'
   },
   mutations: {
-    changeMenu (state, key) {
-      state.menu = state.allMenus[key]
-    },
     setAllMenus (state, data) {
       state.allMenus = data
     },
     setNav (state, nav) {
       state.nav = nav
+    },
+    setActiveMenu (state, key) {
+      state.activeMenu = key
     }
   },
   actions: {

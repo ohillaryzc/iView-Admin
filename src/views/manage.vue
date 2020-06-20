@@ -32,30 +32,39 @@ export default {
 
 <style scoped>
   .manage-container {
+    min-height: 100vh;
     display: flex;
-    height: 100%;
     background: #f7f7f7;
   }
   .manage-container .left-menu-nav {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
     width: 240px;
-    flex-grow: 0;
-    flex-shrink: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
     background-color: #191a23;
     box-shadow: 0 0 10px 0 rgba(0,0,0,.3);
-    z-index: 2;
+    z-index: 11;
   }
   .manage-container .right-content {
     flex-grow: 1;
     flex-shrink: 1;
+    padding-left: 240px;
   }
   .right-content .top-nav {
+    position: fixed;
+    left: 240px;
+    right: 0;
+    top: 0;
+    z-index: 10;
+    width: 100%;
     height: 60px;
     background-color: #fff;
     box-shadow: 0 0 10px 0 rgba(0,0,0,.3);
   }
   .right-content .main {
-    height: calc(100% - 60px);
-    overflow-y: auto;
-    overflow-x: hidden;
+    padding-top: 60px;
   }
 </style>

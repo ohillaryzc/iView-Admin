@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router, { syncRouterMap } from './router'
 import store from './store'
-import { Sider, Button, Menu, Submenu, MenuItem, Icon, RadioGroup, Radio, DatePicker, Tooltip } from 'view-design'
+import { Sider, Button, Menu, Submenu, MenuItem, Icon, RadioGroup, Radio, DatePicker, Tooltip, Message } from 'view-design'
 import 'view-design/dist/styles/iview.css'
 import './assets/cover.css'
 
@@ -12,31 +12,37 @@ const iViewComponents = { Sider, Button, Menu, Submenu, MenuItem, Icon, RadioGro
 Object.keys(iViewComponents).forEach(key => {
   Vue.component(key, iViewComponents[key])
 })
+Vue.prototype.$Message = Message
 
 // 初始化manage
-const menus = {}
-const navs = []
-// nav.forEach(item => {
-//   menus[item.moduleKey] = []
-// })
-const tempNav = []
-syncRouterMap.forEach(item => {
-  if (!item.hidden) {
-    if (!menus[item.moduleKey]) {
-      menus[item.moduleKey] = []
-    }
-    if (tempNav.indexOf(item.moduleKey) === -1) {
-      tempNav.push(item.moduleKey)
-      navs.push({
-        label: item.name,
+const allMenu = {}
+const allNav = []
+function getConfigList (arr, first) {
+  const result = []
+  arr.forEach(item => {
+    if (!item.hidden) {
+      const menu = {
+        label: item.meta.title,
         path: item.path
-      })
+      }
+      if (item.children) {
+        menu.children = getConfigList(item.children)
+      }
+      if (first) {
+        allNav.push({ name: item.name, key: item.moduleKey, path: item.pathName })
+        if (!allMenu[item.moduleKey]) {
+          allMenu[item.moduleKey] = []
+        }
+        allMenu[item.moduleKey].push(menu)
+      }
+      result.push(menu)
     }
-    menus[item.moduleKey].push(item)
-  }
-})
-store.commit('setAllMenus', menus)
-store.commit('setNav', navs)
+  })
+  return result
+}
+getConfigList(syncRouterMap, true)
+store.commit('setAllMenus', allMenu)
+store.commit('setNav', allNav)
 
 Vue.config.productionTip = false
 

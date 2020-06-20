@@ -21,6 +21,7 @@ const syncRouterMap = [
   },
   {
     path: '/desktop',
+    pathName: '/desktop',
     name: '首页',
     component: Manage,
     moduleKey: 'index',
@@ -43,6 +44,7 @@ const syncRouterMap = [
   },
   {
     path: '/order',
+    pathName: '/order',
     name: '订单',
     component: Manage,
     moduleKey: 'order',
@@ -57,7 +59,7 @@ const syncRouterMap = [
           title: '订单列表',
           icon: 'ios-list'
         },
-        component: Desktop
+        component: () => import('../views/order')
       },
       {
         path: 'list-v2',
@@ -65,36 +67,7 @@ const syncRouterMap = [
           title: '订单列表v2',
           icon: 'ios-list'
         },
-        component: Desktop
-      }
-    ],
-    redirect: '/order/list'
-  },
-  {
-    path: '/order',
-    name: '订单',
-    component: Manage,
-    moduleKey: 'order',
-    meta: {
-      title: '支付配置',
-      icon: 'ios-order'
-    },
-    children: [
-      {
-        path: 'list',
-        meta: {
-          title: '全局配置',
-          icon: 'ios-list'
-        },
-        component: Desktop
-      },
-      {
-        path: 'list-v2',
-        meta: {
-          title: '配置v10',
-          icon: 'ios-list'
-        },
-        component: Desktop
+        component: () => import('../views/order/list-v2')
       }
     ],
     redirect: '/order/list'

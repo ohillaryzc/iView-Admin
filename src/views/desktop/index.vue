@@ -130,7 +130,8 @@ export default {
   mounted () {
     const chart = new Chart({
       container: 'chart',
-      autoFit: true,
+      // autoFit: true,
+      width: 500,
       height: 400
     })
     chart.data(data)
@@ -188,6 +189,9 @@ export default {
       .color('#9AD681')
       .shape('dash')
     chart.render()
+    // this.$nextTick(() => {
+    //
+    // })
     this.chart = chart
   },
   created () {

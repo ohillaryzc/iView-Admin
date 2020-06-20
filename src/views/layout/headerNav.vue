@@ -1,7 +1,6 @@
 <template>
   <div class="top-nav">
-    <router-link v-for="(item, index) in navs" :key="index" :to="item.path">{{ item.label }}</router-link>
-    <Button type="text"></Button>
+    <Button type="text" v-for="(item, index) in navs" :key="index" @click="changeMenu(item)">{{ item.name }}</Button>
   </div>
 </template>
 
@@ -15,9 +14,14 @@ export default {
   computed: mapState({
     navs: 'nav'
   }),
-  methods: {},
+  methods: {
+    changeMenu (item) {
+      this.$store.commit('setActiveMenu', item.key)
+      this.$router.push(item.path)
+    }
+  },
   mounted () {
-    console.log(this.navs)
+    console.log(this.$route)
   },
   created () {
   }
