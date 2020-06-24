@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     allMenus: {},
     nav: [],
-    activeMenu: 'index'
+    activeMenu: 'index',
+    paths: {}
   },
   mutations: {
     setAllMenus (state, data) {
@@ -18,6 +19,9 @@ export default new Vuex.Store({
     },
     setActiveMenu (state, key) {
       state.activeMenu = key
+    },
+    setPaths (state, paths) {
+      state.paths = paths
     }
   },
   actions: {

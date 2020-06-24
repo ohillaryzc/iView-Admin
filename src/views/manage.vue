@@ -34,7 +34,6 @@ export default {
   .manage-container {
     min-height: 100vh;
     display: flex;
-    background: #f7f7f7;
   }
   .manage-container .left-menu-nav {
     position: fixed;
@@ -52,6 +51,8 @@ export default {
     flex-grow: 1;
     flex-shrink: 1;
     padding-left: 240px;
+    background: #f7f7f7;
+    width: 100%;
   }
   .right-content .top-nav {
     position: fixed;

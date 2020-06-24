@@ -71,6 +71,28 @@ const syncRouterMap = [
       }
     ],
     redirect: '/order/list'
+  },
+  {
+    path: '/statistics',
+    pathName: '/statistics',
+    name: '统计',
+    component: Manage,
+    moduleKey: 'statistics',
+    meta: {
+      title: '数据统计',
+      icon: 'ios-stats'
+    },
+    children: [
+      {
+        path: 'order-statistics',
+        meta: {
+          title: '订单统计',
+          icon: 'ios-stats'
+        },
+        component: () => import('../views/statistics/order-statistics')
+      }
+    ],
+    redirect: '/statistics/order-statistics'
   }
 ]
 

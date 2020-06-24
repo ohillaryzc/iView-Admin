@@ -1,3 +1,81 @@
+/* flex布局 */
+.flex-direction-column {
+    -webkit-box-orient: vertical;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+}
+
+.flex-wrap {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+}
+
+.flex-con {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+.flex-box {
+    flex-shrink: 0;
+    flex-grow: 0;
+}
+
+.flex-vertical {
+    -webkit-box-orient: vertical;
+    -webkit-flex-flow: column;
+    flex-flow: column;
+}
+
+.flex-x-center {
+    justify-content: center;
+    -webkit-justify-content: center;
+    -webkit-box-pack: center;
+}
+
+.flex-x-end {
+    justify-content: flex-end;
+    -webkit-justify-content: flex-end;
+    -webkit-box-pack: end;
+}
+
+.flex-x-justify {
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    -webkit-box-pack: justify;
+}
+
+.flex-x-around {
+    -webkit-justify-content: space-around;
+    justify-content: space-around;
+    -webkit-box-pack: justify;
+}
+
+.flex-y-start {
+    align-items: flex-start;
+    -webkit-align-items: flex-start;
+    -webkit-box-align: start;
+}
+
+.flex-y-center {
+    align-items: center;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+}
+
+.flex-y-end {
+    align-items: flex-end;
+    -webkit-align-items: flex-end;
+    -webkit-box-align: end;
+}
+
+.flex-stretch {
+    align-items: stretch;
+    -webkit-align-items: stretch;
+    -webkit-box-align: stretch;
+}
+
 /* iView样式覆盖 */
 .ivu-menu-dark.ivu-menu-vertical .ivu-menu-submenu-title:hover {
     background-color: #101117;
@@ -5,4 +83,18 @@
 }
 .ivu-menu-dark.ivu-menu-vertical .ivu-menu-opened .ivu-menu-submenu-title {
     background-color: #101117;
+}
+
+.order-statistics .ivu-tabs-nav .ivu-tabs-tab {
+    padding: 16px;
+}
+.order-statistics .ivu-tabs-nav-scroll {
+    padding-left: 32px;
+}
+.order-statistics .ivu-tabs-bar {
+    margin: 0;
+    background-color: #fff;
+}
+.order-statistics .ivu-divider-horizontal {
+    margin: 12px 0;
 }

@@ -3,13 +3,13 @@
     <Sider hide-trigger :width="240" style="background: #191a23;">
       <div class="logo">iView Admin</div>
       <div class="menus">
-        <Menu theme="dark">
+        <Menu theme="dark" @on-select="goPage" :active-name="$route.path">
           <Submenu v-for="(item, index) in allMenu[menus]" :key="index" :name="item.path">
             <template slot="title">
               <Icon type="ios-appstore" size="20"/>
               <span>{{ item.label }}</span>
             </template>
-            <MenuItem v-for="(child, idx) in item.children" :key="idx" :name="child.path">{{ child.label }}</MenuItem>
+            <MenuItem v-for="(child, idx) in item.children" :key="idx" :name="item.path + '/' + child.path">{{ child.label }}</MenuItem>
           </Submenu>
         </Menu>
       </div>
@@ -24,7 +24,13 @@ export default {
   data () {
     return {}
   },
-  methods: {},
+  methods: {
+    goPage (name) {
+      if (this.$route.path !== name) {
+        this.$router.push(name)
+      }
+    }
+  },
   computed: {
     ...mapState({
       menus: 'activeMenu',
@@ -32,7 +38,6 @@ export default {
     })
   },
   mounted () {
-    console.log(this.menus, this.allMenu)
   }
 }
 </script>
