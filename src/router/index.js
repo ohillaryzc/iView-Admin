@@ -43,34 +43,48 @@ const syncRouterMap = [
     redirect: '/desktop/desktop'
   },
   {
-    path: '/order',
-    pathName: '/order',
-    name: '订单',
+    path: '/animate',
+    pathName: '/animate',
+    name: 'Vue-animate',
     component: Manage,
-    moduleKey: 'order',
+    moduleKey: 'Vue',
     meta: {
-      title: '订单管理',
-      icon: 'ios-order'
+      title: 'Vue动画',
+      icon: 'ios-animate'
     },
     children: [
       {
-        path: 'list',
+        path: 'index',
         meta: {
-          title: '订单列表',
+          title: 'Vue原生过渡效果',
           icon: 'ios-list'
         },
-        component: () => import('../views/order')
-      },
-      {
-        path: 'list-v2',
-        meta: {
-          title: '订单列表v2',
-          icon: 'ios-list'
-        },
-        component: () => import('../views/order/list-v2')
+        component: () => import('../views/VueDoc/animation')
       }
     ],
-    redirect: '/order/list'
+    redirect: '/animate/index'
+  },
+  {
+    path: '/command',
+    pathName: '/command',
+    name: 'Vue-command',
+    component: Manage,
+    moduleKey: 'Vue',
+    meta: {
+      title: 'Vue指令',
+      icon: 'ios-command'
+    },
+    children: [
+      {
+        path: 'index',
+        meta: {
+          title: 'Vue自定义指令',
+          icon: 'ios-list'
+        },
+        component: () => import('../views/VueDoc/command')
+      }
+    ],
+    redirect: '/command/index'
   },
   {
     path: '/statistics',
