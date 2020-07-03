@@ -93,6 +93,28 @@ const syncRouterMap = [
       }
     ],
     redirect: '/statistics/order-statistics'
+  },
+  {
+    path: '/my-alert',
+    pathName: '/my-alert',
+    name: '自定义组件',
+    component: Manage,
+    moduleKey: 'myComponent',
+    meta: {
+      title: '弹窗提示',
+      icon: ''
+    },
+    children: [
+      {
+        path: 'alert',
+        meta: {
+          title: 'js轻提示',
+          icon: ''
+        },
+        component: () => import('../views/alert/my-alert')
+      }
+    ],
+    redirect: '/my-alert/alert'
   }
 ]
 

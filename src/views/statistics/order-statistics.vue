@@ -2,7 +2,10 @@
   <div class="order-statistics">
     <div class="search">
       <div class="search-top">
-        <DatePicker type="daterange" placeholder="选择时间" style="width: 200px;margin-right: 16px;"></DatePicker>
+        <DatePicker v-if="timeType === '0'" type="daterange" :options="options2" placeholder="选择时间" style="width: 200px;margin-right: 16px;" id="self-select"></DatePicker>
+        <DatePicker v-else :options="options2" :open="dateSelectOpen" placeholder="选择时间" @on-change="selectTime" style="width: 200px;margin-right: 16px;">
+          <Input :value="times[0] + ' - ' + times[1]" @on-focus="timeFocus" @on-blur="dateSelectOpen = false" suffix="ios-calendar-outline" ref="dataselect"/>
+        </DatePicker>
         <RadioGroup v-model="period" type="button">
           <Radio label="1">昨天</Radio>
           <Radio label="2">最近7天</Radio>
@@ -22,33 +25,8 @@
         <Button type="primary">查询</Button>
       </div>
     </div>
-    <Tabs>
-      <TabPane label="用户数据">
-        <h4 style="margin-top: 24px;">付费用户</h4>
-        <div class="all-chart">
-          <div class="chart-row">
-            <div class="chart-col">
-              <p class="chart-item-title">分布</p>
-              <div id="chart-user1"></div>
-            </div>
-            <div class="chart-col">
-              <p class="chart-item-title">分布</p>
-              <div id="chart-user2"></div>
-            </div>
-          </div>
-          <div class="chart-row">
-            <div class="chart-col">
-              <p class="chart-item-title">分布</p>
-              <div id="chart-user3"></div>
-            </div>
-            <div class="chart-col">
-              <p class="chart-item-title">分布</p>
-              <div id="chart-user4"></div>
-            </div>
-          </div>
-        </div>
-      </TabPane>
-      <TabPane label="基础数据">
+    <Tabs :animated="false" @on-click="tabChange">
+      <TabPane name="1" label="基础数据">
         <div class="top-select">
           <Select v-model="type" style="width: 200px;">
             <Option value="1">个人小程序</Option>
@@ -209,7 +187,7 @@
           </div>
         </div>
       </TabPane>
-      <TabPane label="销售数据">
+      <TabPane name="2" label="销售数据">
         <div class="top-select">
           <Select v-model="type" style="width: 200px;">
             <Option value="1">个人小程序</Option>
@@ -245,6 +223,41 @@
           </div>
         </div>
       </TabPane>
+      <TabPane name="3" label="用户数据">
+        <h4 style="margin-top: 24px;">付费用户</h4>
+        <div class="all-chart">
+          <div class="chart-row">
+            <div class="chart-col">
+              <p class="chart-item-title">分布</p>
+              <div id="chart-user1"></div>
+            </div>
+            <div class="chart-col">
+              <p class="chart-item-title">分布</p>
+              <div id="chart-user2"></div>
+            </div>
+          </div>
+          <div class="chart-row">
+            <div class="chart-col">
+              <p class="chart-item-title">分布</p>
+              <div id="chart-user3"></div>
+            </div>
+            <div class="chart-col">
+              <p class="chart-item-title">分布</p>
+              <div id="chart-user4"></div>
+            </div>
+          </div>
+          <div class="chart-row">
+            <div class="area-title">
+              <span>用户数</span>
+              <Divider type="vertical"/>
+              <span>地区分布TOP10</span>
+            </div>
+            <div class="area-line-box">
+              <div id="chart-area"></div>
+            </div>
+          </div>
+        </div>
+      </TabPane>
     </Tabs>
   </div>
 </template>
@@ -256,7 +269,42 @@ export default {
   data () {
     return {
       period: null,
-      type: '1'
+      type: '1',
+      activeTab: '1',
+      hasTab1: true,
+      hasTab2: false,
+      hasTab3: false,
+      options2: {
+        shortcuts: [
+          {
+            text: '任意1天',
+            onClick: () => {
+              this.setActiveDateTab(0, '1')
+            }
+          },
+          {
+            text: '任意7天',
+            onClick: () => {
+              this.setActiveDateTab(1, '7')
+            }
+          },
+          {
+            text: '任意30天',
+            onClick: () => {
+              this.setActiveDateTab(2, '30')
+            }
+          },
+          {
+            text: '自定义',
+            onClick: () => {
+              this.setActiveDateTab(3, '0')
+            }
+          }
+        ]
+      },
+      times: [],
+      timeType: '1',
+      dateSelectOpen: false
     }
   },
   methods: {
@@ -344,8 +392,8 @@ export default {
         container: tagId,
         autoFit: true,
         // width: 400,
-        padding: [0, 300, 0, 0],
-        height: 300
+        padding: [0, 400, 0, 0],
+        height: 400
       })
       chart.data(data)
       chart.scale('percent', {
@@ -365,7 +413,7 @@ export default {
       })
       chart.legend({
         position: 'right',
-        offsetX: 0,
+        offsetX: -200,
         itemHeight: 40,
         itemName: {
           spacing: 20,
@@ -409,15 +457,79 @@ export default {
       this.$nextTick(() => {
         chart.forceFit()
       })
+    },
+    setChartLine (tagId) {
+      const data = [
+        { area: '江西', userNum: 18203 },
+        { area: '湖南', userNum: 23489 },
+        { area: '湖北', userNum: 29034 },
+        { area: '北京', userNum: 104970 },
+        { area: '广东', userNum: 131744 },
+        { area: '广西', userNum: 1258 },
+        { area: '山东', userNum: 3654 },
+        { area: '浙江', userNum: 10256 },
+        { area: '云南', userNum: 5698 },
+        { area: '海南', userNum: 1456 }
+      ]
+
+      data.sort((a, b) => {
+        return (a.userNum - b.userNum)
+      })
+      const chart = new Chart({
+        container: tagId,
+        autoFit: true,
+        height: 500
+      })
+
+      chart.data(data)
+      chart.scale('userNum', { nice: true })
+      chart.coordinate().transpose()
+      chart.tooltip({
+        showMarkers: false
+      })
+      chart.interaction('active-region')
+      chart.interval().position('area*userNum')
+      chart.render()
+      this.$nextTick(() => {
+        chart.forceFit()
+      })
+    },
+
+    tabChange (name) {
+      if (name !== this.activeTab && name === '3' && !this.hasTab3) {
+        this.hasTab3 = true
+        this.activeTab = name
+        setTimeout(() => {
+          this.setChartPie2('chart-user1')
+          this.setChartPie2('chart-user2')
+          this.setChartPie2('chart-user3')
+          this.setChartPie2('chart-user4')
+          this.setChartLine('chart-area')
+        }, 500)
+      }
+    },
+    setActiveDateTab (index, type) {
+      this.timeType = type
+      this.dateSelectOpen = (type !== '0')
+      if (type !== '0') {
+        this.$nextTick(() => {
+          this.$refs.dataselect.focus()
+        })
+      } else {
+        this.$nextTick(() => {
+          document.querySelector('#self-select .ivu-input').focus()
+          document.querySelector('#self-select .ivu-input').click()
+        })
+      }
+    },
+    selectTime (val) {},
+    timeFocus () {
+      this.dateSelectOpen = true
     }
   },
   mounted () {
     this.setChartPie1('chart1')
     this.setChartPie1('chart2')
-    this.setChartPie2('chart-user1')
-    this.setChartPie2('chart-user2')
-    this.setChartPie2('chart-user3')
-    this.setChartPie2('chart-user4')
   },
   created () {
   }
@@ -621,7 +733,7 @@ export default {
   }
   .chart-row .chart-col > div {
     background-color: #fff;
-    height: 100%;
+    height: 400px;
   }
   .chart-row .chart-col:first-child {
     padding-right: 8px;
@@ -633,5 +745,16 @@ export default {
   .chart-item-title {
     padding: 24px 32px;
     background-color: #fff;
+  }
+  .area-title {
+    padding: 16px;
+    background-color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    color: rgba(0,0,0,0.85);
+  }
+  .area-line-box {
+    background-color: #fff;
+    padding: 25px 40px;
   }
 </style>
