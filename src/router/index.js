@@ -93,6 +93,50 @@ const syncRouterMap = [
       }
     ],
     redirect: '/statistics/order-statistics'
+  },
+  {
+    path: '/form',
+    pathName: '/form',
+    name: '表单',
+    component: Manage,
+    moduleKey: 'form',
+    meta: {
+      title: '配置表单',
+      icon: 'md-folder'
+    },
+    children: [
+      {
+        path: 'dynamic-form',
+        meta: {
+          title: '自定义表单',
+          icon: 'md-list'
+        },
+        component: () => import('../views/form/dynamic-form')
+      }
+    ],
+    redirect: '/form/dynamic-form'
+  },
+  {
+    path: '/drag',
+    pathName: '/drag',
+    name: '拖拽',
+    component: Manage,
+    moduleKey: 'drag',
+    meta: {
+      title: '拖拽',
+      icon: 'md-folder'
+    },
+    children: [
+      {
+        path: 'index',
+        meta: {
+          title: '拖拽',
+          icon: 'md-list'
+        },
+        component: () => import('../views/drag/index')
+      }
+    ],
+    redirect: '/drag/index'
   }
 ]
 
