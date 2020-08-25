@@ -1,10 +1,10 @@
 <template>
-  <div>订单列表第二版</div>
+  <div></div>
 </template>
 
 <script>
 export default {
-  name: 'list-v2'
+  name: 'command'
 }
 </script>
 

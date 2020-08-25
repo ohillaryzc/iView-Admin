@@ -2,13 +2,13 @@ import Vue from 'vue'
 import App from './App.vue'
 import router, { syncRouterMap } from './router'
 import store from './store'
-import { Sider, Button, Menu, Submenu, MenuItem, Icon, RadioGroup, Radio, DatePicker, Tooltip, Message, Select, Option, Tabs, TabPane, Divider } from 'view-design'
+import { Sider, Button, Menu, Submenu, MenuItem, Icon, RadioGroup, Radio, DatePicker, Tooltip, Message, Select, Option, Tabs, TabPane, Divider, Input } from 'view-design'
 import 'view-design/dist/styles/iview.css'
 import './assets/cover.css'
 
 // import { nav } from './config'
 
-const iViewComponents = { Sider, Button, Menu, Submenu, MenuItem, Icon, RadioGroup, Radio, DatePicker, Tooltip, Select, Option, Tabs, TabPane, Divider }
+const iViewComponents = { Sider, Button, Menu, Submenu, MenuItem, Icon, RadioGroup, Radio, DatePicker, Tooltip, Select, Option, Tabs, TabPane, Divider, Input }
 Object.keys(iViewComponents).forEach(key => {
   Vue.component(key, iViewComponents[key])
 })
@@ -18,6 +18,7 @@ Vue.prototype.$Message = Message
 const allMenu = {}
 const allNav = []
 const paths = {}
+const allName = []
 function getConfigList (arr, first, prePath, mKey) {
   const result = []
   arr.forEach(item => {
@@ -30,7 +31,10 @@ function getConfigList (arr, first, prePath, mKey) {
         menu.children = getConfigList(item.children, false, item.pathName, item.moduleKey)
       }
       if (first) {
-        allNav.push({ name: item.name, key: item.moduleKey, path: item.pathName })
+        if (allName.indexOf(item.moduleKey) === -1) {
+          allNav.push({ name: item.name, key: item.moduleKey, path: item.pathName })
+          allName.push(item.moduleKey)
+        }
         if (!allMenu[item.moduleKey]) {
           allMenu[item.moduleKey] = []
         }
